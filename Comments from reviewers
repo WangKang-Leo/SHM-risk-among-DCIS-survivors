@@ -1,0 +1,49 @@
+Reviewer #1 (Comments to the Author): 
+
+The authors analyzed 184,363 DCIS cases in the SEER database from 1975-2006 to determine the rate of secondary hematologic malignancies (SHM) in those who received radiation in comparison to those that did not. Numerous prior studies have documented the occurrence of second malignancy after breast radiation, including SHM. This study’s stated aim is to further describe the types of SHM that arose post treatment as well assess the latency and outcome. 
+
+The strength of the manuscript is it stresses that given the normal life expectancy of the vast majority of women diagnosed with DCIS, it important to identify unintentional deleterious effects of treatment like second malignancies to optimize the therapeutic ratio of DCIS treatment. 
+
+The manuscript would be enhance by 
+- adding some clinical reasoning for studying SHM specifically after DCIS treatment with RR: 
+Most secondary malignancy from a course of radiation therapy is in contiguous organs to the radiation target – and NHL, while technically a SHM, could be classified as such since post RT it most frequently arises near the radiation field. If this was the case – would SHM still be more likely? Why is it clinically important to look at SHM in an isolated fashion post RT for DCIS? 
+
+- providing a biological rationale for induction of SHM by radiation: 
+Radiation of bone marrow is typically thought of as the carcinogenic event for SHM. As you identify in the manuscript - this is supported by observations that radiation of pelvic malignancies that can include the sacrum, spine and iliac crests which are active bone marrow centers for hematopoiesis in adults are associated with higher risk SHM. In breast cancer, SHM has been linked with regional nodal irradiation which can include part of sternum - and particularly when combined with alkylating agents. In contrast, radiation for DCIS includes only partial rib irradiation. 
+
+- Identification of radiation specific factors associated with SHM: 
+The focus of this manuscript is SHM after RT for DCIS yet this manuscript looks only at clinical factors associated with incidences. Identification of radiation methods that are associated with SHM is crucial to reduce occurrence and this is not included in this manuscript. 
+
+- Analysis of SHM by treatment era: 
+This manuscript looks at DCIS treated over a period of 41 years (1975-2016). Radiation methods have changed dramatically in general and specifically for treatment of DCIS. For instance, DCIS 30-40 years ago was in some cases treated like an invasive cancer and given regional nodal irradiation which is associated with higher rates of SHM. Furthermore, radiation delivery methods that were acceptable 40 years ago such as Cobalt have higher second malignancy potential. The rate of SHM from obsolete RT methods holds historical interest but does not provide relevance for decision making in today’s practice. Focusing on a more recent treatment era such 1996-2016 would assist in being able to extrapolate these results to todays practice. At least, comparing rates of HSM by treatment era, e.g. 1975-1995 vs 1996-2016, would be helpful. 
+
+Other minor comments: 
+Page 8, line 2-3: “…low-intermediate risk patients with DCIS were defined as having a patient prognostic score…” This is the Van Nuys score that is being used and should be identified and referenced accordingly. 
+Pg 8, lines 15: “… expected number of patients with SHM…” Please reference data source of background incidence rates for HMs in the general US population 
+Pg 12, line 20, section “Risk of SHMs in Low/ intermediate risk DCIS” Please give the rationale for why the risk of SHM’s is expected to be different in low-intermediate risk vs High risk DCIS. 
+-pg 17, conclusion: I did not see OS data comparing OS from DCIS with and without RT in the analysis to justify the conclusion that RT is associated with worse OS. Recommend the comparison of OS with and without RT for the 184,363 DCIS cases be added in the results to provide context. Also, SHMs while elevated after breast RT are still a very uncommon occurrence - please add a justification for your advocating for health care resources dedicated to screening for this beyond good standard clinical follow up for DCIS. 
+
+
+
+Reviewer #2 (Comments to the Author): 
+
+The authors have analyzed a large seer dataset to show that patients with DCIS that recd RT have an increased risk of developing ALL and that the survival for these cases is lower. They also show an delayed inc risk of developing NHL. Overall, the findings are novel and clinically important. 
+
+Minor concerns: 
+1. Can they speculate why no inc risk of classic exposure related cancers- MDS/AML was seen with RT? 
+
+2. Have the authors compared inc risk of ALL in DCIS to frank Breast cancer? 
+
+
+Reviewer #3 (Comments to the Author): 
+
+This is a SEER analysis of women with a diagnosis of DCIS, examining the relationship between radiation exposure and secondary hematologic malignancy (SHM). This is a unique and interesting analysis in that it examines the timeline of SHM development, and the various subtypes of SHM, which has previously note been reported. 
+
+There are several concerns that should be addressed: 
+
+1. The SEER search for this analysis yielded >184k patients. This a significant increase in patient number compared to prior SEER based publications on DCIS, including the landmark analysis by Narod et al in 2015, which yielded about 108K patients- this is an updated dataset but it seems like a very large jump in number. Also in the Narod analysis, of the 87K with available data, about 25K had mastectomy (and no RT), and of those that had lumpectomy, 19K had no RT, and 42K had RT. Thus, in total, about 29% had mastectomy, about 31% in the lumpectomy group had no RT, and about 51% overall had no RT. In the current dataset, the mastectomy rate appears slightly lower, and the RT utilization rate is also substantially lower, with about 38% of patients who had lumpectomy foregoing radiation- with the very large patient number this is a meaningful difference in RT utilization rate. This may be the first SEER DCIS report using data up to 2019, and practice patterns may have changed, so I
+would include a more detailed explanation of how the data query was done and a more detailed discussion on any explanations for differences in practice patterns that might explain this. I want to make sure the reader has confidence in the data. 
+2. It is important to put the numbers in context. Of the >184k in the dataset, there were 1289 SHM’s, with 562 in the RT group and 727 in the non-RT group. While the relative risks are greater in the RT group, the absolute risk here is very low, and this does not come across in the manuscript. This should be made clear in both the abstract and the discussion. I don’t think with these absolute numbers support the statement in the discussion pate 16 line 8, “our outcomes demonstrated the importance of avoiding RT in patients with low or intermediate risk DCIS”. The decision about RT is multifactorial, and given the absolute risks shown in this data, the risk of SHM would be just one in a large number of individualized considerations for the use of RT. I think it is fine to suggest it is a consideration, but the above statement is far too strong. 
+3. Relatedly, in the following sentence, the authors also suggest it is important to forego boost in some patients. There is absolutely no data in this report on radiation dose/fractionation, no substantive evidence for a dose-response relationship for the development of SHM, and thus this statement is not supported. It would be fine to suggest it as a possible consideration, but by no means would this data support any recommendation about Rt dose/fractionation. 
+4. There would be no reason to think that the risk of SHM would relate to the size or DCIS grade. I understand the point that in lower risk patients, the consideration for SHM is more significant given the smaller gains of RT in this group. This portion of the analysis is interesting, but again needs to be put in context. In this subset of DCIS patients, the absolute number of SHM cases is again very low. 
+5. There is no discussion in the limitations section on the potential impact of confounders such as the use of endocrine therapy. We know that many patients with DCIS do take endocrine therapy in the US, and the SEER dataset does not capture this. Since this is the other common adjuvant modality in DCIS, there should be a discussion of this as an unknown possible confounder, and references to any data (or lack thereof) on this. The multivariable analysis, particularly that shown in the supplemental material, does seem to show a "signal" in terms of ER/PR status of the DCIS and this warrants discussion.
