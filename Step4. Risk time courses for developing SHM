@@ -1,0 +1,28 @@
+######################
+load("E:/Ph.D projects/3.SEER/1.SEERaBomb/data/SEER/mrgd/popsae.RData")
+load("E:/Ph.D projects/3.SEER/1.SEERaBomb/data/SEER/mrgd/cancTumSzCRT.RData")
+secs=c("ALL","AML","CLL","CML","MM","HL","NHL")
+(p=canc%>%filter(cancer%in%c(secs),sex=="Female"))
+#p <-p%>%filter(!is.na(reg),!is.na(db),!is.na(agedx),!is.na(sex),!is.na(race),!is.na(yrdx),!is.na(modx),!is.na(surv))
+c<-bind_rows(d,p)
+a=p2s(c,firstS="breastCIS",secondS=secs,yrcut=1975)
+#########dA including O/E secondary HM#######
+papFolICD=c(8201,8230,8500:8504,8507,8523) 
+canc$cancer=as.character(canc$cancer)
+canc$sex=as.character(canc$sex)
+canc$cancer[canc$seqnum%in%c("0","1") & !is.na(canc$CODS) & canc$trt%in%c("nr","eb") & canc$sex=="Female" & canc$histo3%in%papFolICD & canc$cancer=="breastCIS" & canc$chemo=="0"& (is.na(canc$cstumsiz)|(canc$cstumsiz!="990"&canc$cstumsiz!="997"&canc$cstumsiz!="998"))&(is.na(canc$eod10ex)|canc$eod10ex!=5)& (is.na(canc$eod10sz)|canc$eod10sz!=997)&(is.na(canc$eod10sz)|canc$eod10sz!=998)& (is.na(canc$tumsizs)|canc$tumsizs!=998)]="DCIS" 
+table(canc$cancer)
+canc$cancer=factor(canc$cancer)
+
+##low-risk##
+canc$cancer[canc$seqnum%in%c("0","1") & !is.na(canc$CODS) & canc$trt%in%c("nr","eb") & canc$sex=="Female" & canc$histo3%in%papFolICD & canc$cancer=="breastCIS" & canc$chemo=="0"& (is.na(canc$cstumsiz)|(canc$cstumsiz!="990"&canc$cstumsiz!="997"&canc$cstumsiz!="998"))&(is.na(canc$eod10ex)|canc$eod10ex!=5)& (is.na(canc$eod10sz)|canc$eod10sz!=997)&(is.na(canc$eod10sz)|canc$eod10sz!=998)& (is.na(canc$tumsizs)|canc$tumsizs!=998)& canc$agedx>=50]="DCIS" 
+canc$cancer[canc$cancer%in%secs]="SHM"
+table(canc$cancer)
+pf=seerSet(canc,popsae,Sex="Female",ageStart=0,ageEnd=100)#pooled (races) females 
+pf=mk2D(pf,secondS=secs)#adds secs (commons.R) background rates to pf
+#plot2D(pf)
+trts=c("nr","eb")
+pf=csd(pf,brkst=c(0,1,3,6,10),trts=trts,firstS="DCIS",exclUnkSurv=FALSE)
+dA=pf$DF
+
+write.csv(dA,file="E:/Ph.D projects/3.SEER/1.SEERaBomb/Analyses/Cohort/OandE(0,1,3,6,10).csv")
