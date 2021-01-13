@@ -1,0 +1,86 @@
+######################################################
+#################Starting Analyses####################
+load("E:/Ph.D projects/3.SEER/1.SEERaBomb/data/SEER/mrgd/popsae.RData")
+load("E:/Ph.D projects/3.SEER/1.SEERaBomb/data/SEER/mrgd/cancTumSzCRT.RData")
+
+d=canc%>%filter(sex=="Female",cancer=="breastCIS")
+####DCIS#############241877
+(d=d%>%filter(histo3=="8201"|histo3=="8230"|histo3=="8500"|histo3=="8501"|
+                histo3=="8502"|histo3=="8503"|histo3=="8504"|histo3=="8507"|
+                histo3=="8523"))
+####extention######241523
+d=d%>%filter(is.na(cstumsiz)|(cstumsiz!="990"&cstumsiz!="997"&cstumsiz!="998"))
+d=d%>%filter(is.na(eod10ex)|eod10ex!=5,is.na(eod10sz)|eod10sz!=997,is.na(eod10sz)|eod10sz!=998,is.na(tumsizs)|tumsizs!=998)
+#####bilateral###
+
+##d=d%>%filter(lateral!=4)####
+####BCS######### 154117
+#d=d%>%filter((surgprif>19&surgprif<25)|(sssurg==10|sssurg==20))
+table(d$sssurg)
+table(d$surgprif)
+####first primary### 193280
+d=d%>%filter(seqnum==0|seqnum==1)   #0：One primary only in the patient’s lifetime,1：First of two or more primaries
+####radiation#####
+unique(d$trt)
+d=d%>%filter(chemo=="0")   #191983
+d=d%>%filter(trt%in%c("nr","eb")) #no and external beam  184988
+####follow up#####  !!!!!!184363
+table(is.na(d$CODS))
+d=d%>%filter(!is.na(d$CODS))
+
+mydata=d
+mydata$er=NA
+mydata$er[mydata$erstatus==1]=1
+mydata$er[mydata$erstatus==2]=0
+
+mydata$pr=NA
+mydata$pr[mydata$prstatus==1]=1
+mydata$pr[mydata$prstatus==2]=0
+
+mydata$Race=NA
+mydata$Race[mydata$race=="White"]=1
+mydata$Race[mydata$race=="Black"]=2
+mydata$Race[mydata$race=="Other"]=3
+
+mydata$Grade=NA
+mydata$Grade[mydata$grade=="1"]=1
+mydata$Grade[mydata$grade=="2"]=2
+mydata$Grade[mydata$grade%in%c(3,4)]=3
+
+mydata$surgery=NA
+mydata$surgery[(mydata$surgprif == 0) | (mydata$sssurg==0)]=0 #保乳=1
+mydata$surgery[(mydata$surgprif %in% c(20:24)) | (mydata$sssurg %in% c(10,20))]=1 #保乳=1
+mydata$surgery[(mydata$surgprif %in% c(30:80)) | (mydata$sssurg %in% c(30,80))]=2
+
+mydata$rad[mydata$trt=="eb"]=1
+mydata$rad[mydata$trt=="nr"]=0
+library(tableone)
+vars=c("agedx","yrdx","Race","tumsz","Grade","er","pr","surgery","surv")
+catvars=c("Race","tumsz","Grade","er","pr","surgery")
+tableOne <- CreateTableOne(vars=vars,strata = c("trt"),factorVars = catvars,includeNA=T,data = mydata)
+tab_out<-print(tableOne, catDigits = 1, contDigits = 2, pDigits = 3,quote = T, missing = T, explain = TRUE, printToggle = TRUE,test = TRUE, smd = T, noSpaces = FALSE, padColnames = FALSE,varLabels = FALSE, format = c("fp", "f", "p", "pf")[1],showAllLevels = T, cramVars = NULL, dropEqual = FALSE,exact = NULL, nonnormal = NULL, minMax = FALSE)
+
+library(CBCgrps)
+head(mydata)
+mydatasub<-as.data.frame(mydata[,c("rad","agedx","yrdx","Race","tumsz","Grade","er","pr","surgery","surv")])
+mydatasub$rad=as.factor(mydatasub$rad)
+a<-twogrps(mydatasub,"rad")
+write.csv(tab_out,file="E:/Ph.D projects/3.SEER/1.SEERaBomb/Analyses/Cohort/table1.csv")
+
+#####low risk####
+canc$agescore=NA
+canc$agescore[canc$agedx>=60]=0
+canc$agescore[canc$agedx<60 & canc$agedx>=40]=1
+canc$agescore[canc$agedx<40]=2
+
+canc$gradescore=NA
+canc$gradescore[canc$grade==1]=0
+canc$gradescore[canc$grade==2]=1
+canc$gradescore[canc$grade==3|canc$grade==4]=2
+
+canc$riskscore=NA
+canc$riskscore=canc$size_score+canc$gradescore+canc$agescore
+
+table(canc$riskscore,canc$trt)
+d=canc%>%filter(riskscore%in%c(0:4)) ##low/intermediate-risk
+write.csv(d,file="E:/Ph.D projects/3.SEER/1.SEERaBomb/Analyses/Cohort/brca_primarylowrisk.csv")
