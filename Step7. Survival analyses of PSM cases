@@ -1,0 +1,73 @@
+##############PSM-DCIS################
+library(tidyverse);library(SEERaBomb);library(ggsci);library(data.table);library(tableone)#load packages          
+library(survival);library(survminer);library(bbmle);library(sqldf);library(MatchIt);library(nonrandom);library(Matching)
+setwd("E:/Ph.D projects/3.SEER/1.SEERaBomb/Analyses/Cohort")
+df=as.data.frame(fread("brca_sec.csv"))
+df$er=2
+df$er[df$erstatus==1]=1
+df$er[df$erstatus==2]=0
+
+df$pr=2
+df$pr[df$prstatus==1]=1
+df$pr[df$prstatus==2]=0
+
+df$Race[df$race=="White"]=1
+df$Race[df$race=="Black"]=2
+df$Race[df$race=="Other"]=3
+
+df$Grade=4
+df$Grade[df$grade=="1"]=1
+df$Grade[df$grade=="2"]=2
+df$Grade[df$grade%in%c(3,4)]=3
+
+df$surgery=3
+df$surgery[(df$surgprif == 0) | (df$sssurg==0)]=0 #保乳=1
+df$surgery[(df$surgprif %in% c(20:24)) | (df$sssurg %in% c(10,20))]=1 #保乳=1
+df$surgery[(df$surgprif %in% c(30:80)) | (df$sssurg %in% c(30,80))]=2
+
+
+table(df$status)
+df$tumor_size=4
+df$tumor_size[df$tumsz%in%c(0,1)]=1
+df$tumor_size[df$tumsz%in%c(2)]=2
+df$tumor_size[df$tumsz%in%c(3)]=3
+
+df$status=1
+df$status[df$CODS=="alive"]=0
+
+df$c2occ=as.factor(df$c2occ)
+df$yrdx=as.numeric(df$yrdx)
+df$agedx=as.numeric(df$agedx)
+df$Race=as.factor(df$Race)
+df$tumor_size=as.factor(df$tumor_size)
+df$Grade=as.factor(df$Grade)
+df$er=as.factor(df$er)
+df$pr=as.factor(df$pr)
+df$surgery=as.factor(df$surgery)
+
+data=df[,c("trt","c2occ","status","cancer2","yrdx","agedx","Race","tumor_size","Grade","er","pr","surgery","survy")]
+
+ALL_RT=data%>%filter(c2occ=="0"|cancer2=="NHL",trt=="eb")
+
+ALL_nonRT=data%>%filter(c2occ=="0"|cancer2=="NHL",trt=="nr")
+sapply(ALL_nonRT, function(x) sum(is.na(x)))
+
+ALL_RT=ALL_RT[,c("c2occ","yrdx","agedx","Race","tumor_size","Grade","er","pr","surgery","status","survy","trt")]
+ALL_nonRT=ALL_nonRT[,c("c2occ","yrdx","agedx","Race","tumor_size","Grade","er","pr","surgery","status","survy","trt")]
+ALL_nonRT=na.omit(ALL_nonRT)
+
+f=matchit(c2occ~yrdx+agedx+Race+tumor_size+Grade+er+pr+surgery,data=ALL_RT,method="nearest",discard="none",
+          caliper=0.5,reestimate=F,
+          ratio=5)
+summary(f)
+newdata <- match.data(f)
+stable1 <- CreateTableOne(vars=c("yrdx","agedx","Race","tumor_size","Grade","er","pr","surgery"),strata="c2occ", data=newdata,factorVars=c("Race","tumor_size","Grade","er","pr","surgery"))
+print(stable1,showAllLevels = TRUE)
+
+f1=matchit(c2occ~yrdx+agedx+Race+tumor_size+Grade+er+pr+surgery,data=ALL_nonRT,method="nearest",discard="none",
+           reestimate=T,caliper=0.01,
+           ratio=5)
+ALL_nonRT <- match.data(f1)
+
+ALL=bind_rows(newdata,ALL_nonRT)
+write.csv(ALL,file="E:/Ph.D projects/3.SEER/1.SEERaBomb/Analyses/Cohort/PSM/DCIS_NHL.csv")
